@@ -1,4 +1,4 @@
-package ICS3.Pong.Game;
+package ICS3.Pong;
 
 public class PaddleView {
 }

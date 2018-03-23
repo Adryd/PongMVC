@@ -1,8 +1,8 @@
 package ICS3.Pong.Render;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+        import javax.swing.*;
+        import java.awt.*;
+        import java.awt.image.BufferedImage;
 
 public class DrawView extends JPanel {
     @Override
@@ -18,7 +18,7 @@ public class DrawView extends JPanel {
                 Game.Ball.BallView.draw(g, d);
                 Game.Paddle.PaddleView.draw(g, d);
                 Game.DebugView.draw(g, d);
-                ICS3.Pong.Game.Score.ScoreView.draw(g, d);
+                ICS3.Pong.Score.ScoreView.draw(g, d);
 
 
                 BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);

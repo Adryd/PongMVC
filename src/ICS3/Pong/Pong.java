@@ -7,39 +7,36 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 
 
 // A Swing application extends javax.swing.JFrame
 public class Pong extends JFrame implements Runnable, KeyListener, MouseMotionListener {
     // Define constants
+    public void init() {
+        PlayerModel[] Players = new PlayerModel[2];
+        BallModel Ball = new BallModel();
+        PaddleModel Paddle = new PaddleModel();
+        SettingsModel Settings = new SettingsModel();
+
+        for (int i = 0; i < 2; i++) {
+            Players[i] = new PlayerModel();
+        }
+    }
 
 
+
+    // Pass Inputs to an input controller
     public void mouseMoved(MouseEvent e) {
-        e.getPoint();
+        InputController.mouseMoved(e);
     }
+
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyChar()) {
-            case 'a':
-                break;
-            case 's':
-                break;
-            case 'k':
-                break;
-            case 'j':
-                break;
-        }
+        InputController.keyPress(e);
     }
+
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyChar()) {
-            case 'a':
-                break;
-            case 's':
-                break;
-            case 'k':
-                break;
-            case 'j':
-                break;
-        }
+        InputController.keyRelease(e);
     }
 
 
@@ -57,6 +54,10 @@ public class Pong extends JFrame implements Runnable, KeyListener, MouseMotionLi
         setTitle("Pong"); // "super" JFrame sets the title
         setVisible(true); // "super" JFrame show
 
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "nocursor");
+        canvas.setCursor(blankCursor);
+
         // make a new thread from this class
         Thread th = new Thread(this);
         th.start();
@@ -65,12 +66,26 @@ public class Pong extends JFrame implements Runnable, KeyListener, MouseMotionLi
 
     public void run() {
         while (true) {
-            canvas.repaint();
+            repaint();
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 // do nothing
             }
+        }
+    }
+
+    public class DrawView extends JPanel {
+        @Override
+        public void paintComponent(Graphics g) {
+            Dimension d = this.getSize();
+            super.paintComponent(g); // Paint parent's background
+            setBackground(Color.BLACK); // Set background color for this JPanel
+
+            Ball.BallView.draw(g, d);
+            Paddle.PaddleView.draw(g, d);
+            DebugView.draw(g, d);
+            Score.ScoreView.draw(g, d);
         }
     }
 }
