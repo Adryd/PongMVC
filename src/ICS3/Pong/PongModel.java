@@ -8,10 +8,5 @@ public class PongModel {
 
 
 
-    public void Initialize() {
-        for (int i = 0; i < 2; i++) {
-            Players[i] = new PlayerModel();
-        }
-    }
 
 }

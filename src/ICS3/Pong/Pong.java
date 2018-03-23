@@ -13,18 +13,18 @@ import java.awt.image.BufferedImage;
 // A Swing application extends javax.swing.JFrame
 public class Pong extends JFrame implements Runnable, KeyListener, MouseMotionListener {
     // Define constants
-    public void init() {
-        PlayerModel[] Players = new PlayerModel[2];
-        BallModel Ball = new BallModel();
-        PaddleModel Paddle = new PaddleModel();
-        SettingsModel Settings = new SettingsModel();
 
+    public static PlayerModel[] Players = new PlayerModel[2];
+    public static BallModel Ball = new BallModel();
+    public static PaddleModel Paddle = new PaddleModel();
+    public static SettingsModel Settings = new SettingsModel();
+
+    private void init() {
         for (int i = 0; i < 2; i++) {
             Players[i] = new PlayerModel();
         }
+        BallController.init(Ball)
     }
-
-
 
     // Pass Inputs to an input controller
     public void mouseMoved(MouseEvent e) {
@@ -62,6 +62,8 @@ public class Pong extends JFrame implements Runnable, KeyListener, MouseMotionLi
         Thread th = new Thread(this);
         th.start();
 
+        init();
+
     }
 
     public void run() {
@@ -82,10 +84,10 @@ public class Pong extends JFrame implements Runnable, KeyListener, MouseMotionLi
             super.paintComponent(g); // Paint parent's background
             setBackground(Color.BLACK); // Set background color for this JPanel
 
-            Ball.BallView.draw(g, d);
-            Paddle.PaddleView.draw(g, d);
+            BallView.draw(g, d);
+            PaddleView.draw(g, d);
             DebugView.draw(g, d);
-            Score.ScoreView.draw(g, d);
+            ScoreView.draw(g, d);
         }
     }
 }
